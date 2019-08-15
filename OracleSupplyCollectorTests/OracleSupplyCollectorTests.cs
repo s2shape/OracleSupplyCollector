@@ -16,7 +16,7 @@ namespace OracleSupplyCollectorTests
             _instance = new OracleSupplyCollector.OracleSupplyCollector();
             _container = new DataContainer()
             {
-                ConnectionString = _instance.BuildConnectionString("system", "system", "ORCL", "192.168.0.106")
+                ConnectionString = _instance.BuildConnectionString("system", "system", "ORCL", "localhost")
             };
         }
 
