@@ -24,9 +24,21 @@ namespace OracleSupplyCollector
             {
                 conn.Open();
 
+                decimal rows;
+                using (var cmd = conn.CreateCommand()) {
+                    cmd.CommandText =
+                        $"SELECT COUNT(*) FROM {dataEntity.Collection.Name}";
+
+                    rows = (decimal)cmd.ExecuteScalar();
+                }
+                int sampleRowsPct = rows == 0 ? 0 : (int) (sampleSize * 100.0M / rows);
+                sampleRowsPct += 10;
+                if (sampleRowsPct > 99)
+                    sampleRowsPct = 99;
+
                 using (var cmd = conn.CreateCommand())
                 {
-                    cmd.CommandText = $"SELECT {dataEntity.Name} FROM {dataEntity.Collection.Name} where rownum<={sampleSize}";
+                    cmd.CommandText = $"SELECT * FROM ( SELECT {dataEntity.Name} FROM {dataEntity.Collection.Name} SAMPLE({sampleRowsPct}) ) where rownum<={sampleSize}";
 
                     using (var reader = cmd.ExecuteReader())
                     {

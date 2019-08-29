@@ -6,17 +6,23 @@ using Xunit;
 
 namespace OracleSupplyCollectorTests
 {
-    public class OracleSupplyCollectorTests
+    public class OracleSupplyCollectorTests : IClassFixture<LaunchSettingsFixture>
     {
         private readonly OracleSupplyCollector.OracleSupplyCollector _instance;
-        public readonly DataContainer _container;
+        private readonly DataContainer _container;
+        private LaunchSettingsFixture _fixture;
 
-        public OracleSupplyCollectorTests()
-        {
+        public OracleSupplyCollectorTests(LaunchSettingsFixture fixture) {
+            _fixture = fixture;
             _instance = new OracleSupplyCollector.OracleSupplyCollector();
             _container = new DataContainer()
             {
-                ConnectionString = _instance.BuildConnectionString("system", "system", "ORCL", "localhost")
+                ConnectionString = _instance.BuildConnectionString(
+                    Environment.GetEnvironmentVariable("ORACLE_USER"),
+                    Environment.GetEnvironmentVariable("ORACLE_PASSWORD"),
+                    Environment.GetEnvironmentVariable("ORACLE_SID"),
+                    Environment.GetEnvironmentVariable("ORACLE_HOST")
+                    )
             };
         }
 
@@ -169,8 +175,11 @@ namespace OracleSupplyCollectorTests
                 new DataCollection(_container, "test_index"));
 
             var samples = _instance.CollectSample(entity, 5);
-            Assert.Equal(5, samples.Count);
-            Assert.Contains("Wednesday", samples);
+            Assert.InRange(samples.Count, 4, 6);
+
+            var all_samples = _instance.CollectSample(entity, 7);
+            Assert.Equal(7, all_samples.Count);
+
         }
     }
 }
