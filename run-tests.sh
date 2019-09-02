@@ -20,6 +20,7 @@ echo Inserting test data...
 docker cp OracleSupplyCollectorTests/tests/data.sql oracle:/data.sql
 docker exec -u oracle oracle sqlplus system/oracle@localhost @/data.sql
 
+mkdir OracleSupplyCollectorTests/Properties
 echo { > OracleSupplyCollectorTests/Properties/launchSettings.json
 echo   \"profiles\": { >> OracleSupplyCollectorTests/Properties/launchSettings.json
 echo     \"OracleSupplyCollectorTests\": { >> OracleSupplyCollectorTests/Properties/launchSettings.json
