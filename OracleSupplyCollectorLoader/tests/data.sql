@@ -52,8 +52,6 @@ values(6, 'Friday');
 insert into test_index(id, name)
 values(7, 'Saturday');
 
-create index text_index_name_ind on test_index(name);
-
 create table test_index_ref (
    id integer not null,
    index_id integer,
