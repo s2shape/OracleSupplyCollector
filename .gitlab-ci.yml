@@ -1,4 +1,4 @@
-image: docker.pkg.github.com/s2shape/docker-images/s2shape-test-harness:latest
+image: s2shape/s2shape-test-harness:latest
 
 stages:
   - build
@@ -22,7 +22,7 @@ build:
 test:
   stage: test
   services:
-    - name: docker.pkg.github.com/s2shape/docker-images/oracle-xe:11.2.0
+    - name: s2shape/oracle-xe:11.2.0
       alias: oracle
 
   script:
@@ -39,7 +39,7 @@ test:
 load_test:
   stage: test
   services:
-    - name: docker.pkg.github.com/s2shape/docker-images/oracle-xe:11.2.0
+    - name: s2shape/oracle-xe:11.2.0
       alias: oracle
 
   script:

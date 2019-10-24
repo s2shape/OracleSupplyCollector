@@ -10,5 +10,6 @@ git clone https://github.com/madhead/docker-oracle-xe.git
 mkdir docker-oracle-xe/rpm
 tar czvf docker-oracle-xe/rpm/$ORACLE_DISTR.tar.gz $ORACLE_DISTR
 pushd docker-oracle-xe
-docker build -t docker.pkg.github.com/s2shape/docker-images/oracle-xe:11.2.0 .
+docker build -t s2shape/oracle-xe:11.2.0 .
+docker push s2shape/oracle-xe:11.2.0
 popd
