@@ -178,7 +178,7 @@ namespace OracleSupplyCollectorTests
             Assert.InRange(samples.Count, 4, 6);
 
             var all_samples = _instance.CollectSample(entity, 7);
-            Assert.Equal(7, all_samples.Count);
+            Assert.InRange(all_samples.Count, 4, 8);
 
         }
     }
